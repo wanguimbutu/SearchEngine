@@ -5,6 +5,7 @@
 #include<vector>
 #include<algorithm>
 #include<cctype>
+#include<unordered_map>
 
 //convert  to lowercase
 
@@ -49,13 +50,31 @@ std::vector<std::string> parseDocument(const std:: string& filename){
     return words;
 }
 
-int main(){
-    std::string filename ="sample.txt";
-    std::vector<std::string> words = parseDocument(filename);
 
-    //print extracted words
-    for(const auto& word : words) {
-        std::cout << word << std::endl;
+// invertedd index
+
+std ::unordered_map<std::string, std::vector<std::string>> buildInvertedIndex(const std::vector<std::string>& documents){
+    std::unordered_map<std::string, std::vector<std::string>> invertedIndex;
+
+    for(const auto& document : documents){
+        std::vector<std::string> words =parseDocument(document);
+        for(const auto& word :words){
+            invertedIndex[word].push_back(document);
+        }
     }
-    return 0;
+    return invertedIndex;
+}
+int main(){
+   std::vector<std::string> documents ={"guide.txt","sample.txt"};
+   std::unordered_map<std::string, std::vector<std::string>>invertedIndex = buildInvertedIndex(documents);
+
+   for(const auto& entry : invertedIndex) {
+    std::cout <<entry.first << ": ";
+    for(const auto& document : entry.second){
+        std::cout << document << ": ";
+    }
+    std::cout <<std::endl;
+   }
+    
+       return 0;
 }

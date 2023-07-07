@@ -1,0 +1,5 @@
+Indexing: Design a data structure to store the indexed documents efficiently. One common approach is to use an inverted index, which maps terms (keywords) to the documents that contain them. Build this index by processing the parsed documents and updating the data structure accordingly.
+
+Query processing: Implement the logic to process user queries. Parse the query, remove stop words, and retrieve the relevant documents from the index based on the query terms. Consider ranking the results based on relevance, using techniques like term frequency-inverse document frequency (TF-IDF).
+
+User interface: Create a user interface to interact with your search engine. It could be a command-line interface or a graphical interface, depending on your preferences and the scope of your project.
