@@ -27,6 +27,36 @@ std::string removePunctuation(const std::string& str){
     result.end());
     return result;
 }
+// parse a query
+std:: vector<std::string> parseQuery(const std:: string& query){
+    std::istringstream iss(query);
+    std::vector<std::string>keyword;
+    std::string keyword;
+    while(iss>>keyword){
+        keyword= removePunctuation(toLowercase(keyword));
+        if(!keyword.empty()){
+            keywords.push_back(keyword);
+        }
+    }
+    return keywords;
+}
+
+// perform search using query entered.
+std::vector<std::string>searchQuery(const std:: unordered_map<std::string>, std::vector<std::string>& invertedIndex, const std::string& query){
+    std::vector<std::string> results;
+    std::vector<std::string>keywords =parseQuery(query);
+
+    for(const auto& keyword: keywords){
+        if(invertedIndex.count(keyword)> 0){
+            const std::vector<std::string>& keywordResult= ivertedIndex.at(keyword);
+            results.insert(results.end(), keywordResults.begin(),keywordResult.end());
+        }
+    }
+    std::sort(results.begin(),results.end());
+    results.erase(std::unique(results.begin(),results.end()),results.end());
+    
+    return results;
+}
 //parse a document to extract the words
 std::vector<std::string> parseDocument(const std:: string& filename){
     std::ifstream file(filename);
@@ -51,7 +81,7 @@ std::vector<std::string> parseDocument(const std:: string& filename){
 }
 
 
-// invertedd index
+// inverted index
 
 std ::unordered_map<std::string, std::vector<std::string>> buildInvertedIndex(const std::vector<std::string>& documents){
     std::unordered_map<std::string, std::vector<std::string>> invertedIndex;
